@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "697695954643",
+    "firebase_url": "https://howtalk-3fe81.firebaseio.com",
+    "project_id": "howtalk-3fe81",
+    "storage_bucket": "howtalk-3fe81.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:697695954643:android:489f68dc0bfa93d1",
+        "android_client_info": {
+          "package_name": "com.tistory.hadeslee.howtalk"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "697695954643-198gi41csefcg0peoikfca5mpc2k52ja.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tistory.hadeslee.howtalk",
+            "certificate_hash": "999d62cacae689c5a92c7e00db33f7d7ad7b9f53"
+          }
+        },
+        {
+          "client_id": "697695954643-2ud1dfqjnquo68p5tcijaembavukqr3j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBaXCHvuKV_vCmBYf-eaCBX7wf1vpKq28k"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "697695954643-2ud1dfqjnquo68p5tcijaembavukqr3j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
