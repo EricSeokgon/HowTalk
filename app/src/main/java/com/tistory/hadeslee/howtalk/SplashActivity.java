@@ -1,6 +1,7 @@
 package com.tistory.hadeslee.howtalk;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
@@ -30,10 +31,6 @@ public class SplashActivity extends AppCompatActivity {
         mFirebaseRemoteConfig.setConfigSettings(configSettings);
         mFirebaseRemoteConfig.setDefaults(R.xml.default_config);
 
-        // cacheExpirationSeconds is set to cacheExpiration here, indicating the next fetch request
-// will use fetch data from the Remote Config service, rather than cached parameter values,
-// if cached parameter values are more than cacheExpiration seconds old.
-// See Best Practices in the README for more information.
         mFirebaseRemoteConfig.fetch(0)
                 .addOnCompleteListener(this, new OnCompleteListener<Void>() {
                     @Override
@@ -44,28 +41,33 @@ public class SplashActivity extends AppCompatActivity {
                             // values are returned.
                             mFirebaseRemoteConfig.activateFetched();
                         } else {
-
                         }
                         displayMessage();
                     }
-
-                    void displayMessage() {
-                        String splash_background = mFirebaseRemoteConfig.getString("splash_background");
-                        boolean caps = mFirebaseRemoteConfig.getBoolean("splash_message_caps");
-                        String splash_message = mFirebaseRemoteConfig.getString("splash_message");
-
-                        linearLayout.setBackgroundColor(Color.parseColor(splash_background));
-                        if (caps) {
-                            AlertDialog.Builder builder = new AlertDialog.Builder(SplashActivity.this);
-                            builder.setMessage(splash_message).setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    finish();
-                                }
-                            });
-                            builder.create().show();
-                        }
-                    }
                 });
     }
+
+    void displayMessage() {
+        String splash_background = mFirebaseRemoteConfig.getString("splash_background");
+        boolean caps = mFirebaseRemoteConfig.getBoolean("splash_message_caps");
+        String splash_message = mFirebaseRemoteConfig.getString("splash_message");
+
+        linearLayout.setBackgroundColor(Color.parseColor(splash_background));
+        if (caps) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(SplashActivity.this);
+            builder.setMessage(splash_message).setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    finish();
+                }
+            });
+            builder.create().show();
+        } else {
+            startActivity(new Intent(this, LoginActivity.class));
+        }
+    }
 }
+
+
+
+
