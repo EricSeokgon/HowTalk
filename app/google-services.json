@@ -23,6 +23,14 @@
           }
         },
         {
+          "client_id": "697695954643-ufgd8rp834um3ctsk6qna6gfrm37r8m8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tistory.hadeslee.howtalk",
+            "certificate_hash": "0e6104ace5211c1d9882ce6a1ca2277b19b25e14"
+          }
+        },
+        {
           "client_id": "697695954643-2ud1dfqjnquo68p5tcijaembavukqr3j.apps.googleusercontent.com",
           "client_type": 3
         }
