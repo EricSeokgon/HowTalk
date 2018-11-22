@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -50,7 +51,7 @@ public class SignupActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(Intent.ACTION_PICK);
                 intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
-                startActivityForResult(intent,PICK_FROM_ALBUM);
+                startActivityForResult(intent, PICK_FROM_ALBUM);
             }
         });
 
@@ -66,28 +67,35 @@ public class SignupActivity extends AppCompatActivity {
                 if (email.getText().toString() == null || name.getText().toString() == null || password.getText().toString() == null) {
                     return;
                 }
-                FirebaseAuth.getInstance()
-                        .createUserWithEmailAndPassword(email.getText().toString(), password.getText().toString())
-                        .addOnCompleteListener(SignupActivity.this, new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                final String uid = task.getResult().getUser().getUid();
-                                FirebaseStorage.getInstance().getReference().child("userImages").child(uid).putFile(imageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                                        @SuppressWarnings("VisivleForTests")
-                                        String imageUrl = task.getResult().getDownloadUrl().toString();
+                if (imageUri == null) {
+                    Toast.makeText(getApplicationContext(), "이미지를 넣어주세요.",
+                            Toast.LENGTH_LONG).show();
 
-                                        UserModel userModel = new UserModel();
-                                        userModel.username = name.getText().toString();
-                                        userModel.prodileImageUrl = imageUrl;
+                } else {
 
-                                        FirebaseDatabase.getInstance().getReference().child("users").child(uid).setValue(userModel);
-                                    }
-                                });
+                    FirebaseAuth.getInstance()
+                            .createUserWithEmailAndPassword(email.getText().toString(), password.getText().toString())
+                            .addOnCompleteListener(SignupActivity.this, new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    final String uid = task.getResult().getUser().getUid();
+                                    FirebaseStorage.getInstance().getReference().child("userImages").child(uid).putFile(imageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                                            @SuppressWarnings("VisivleForTests")
+                                            String imageUrl = task.getResult().getDownloadUrl().toString();
 
-                            }
-                        });
+                                            UserModel userModel = new UserModel();
+                                            userModel.username = name.getText().toString();
+                                            userModel.prodileImageUrl = imageUrl;
+
+                                            FirebaseDatabase.getInstance().getReference().child("users").child(uid).setValue(userModel);
+                                        }
+                                    });
+
+                                }
+                            });
+                }
             }
         });
 
