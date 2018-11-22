@@ -9,6 +9,7 @@
     tools:context=".SignupActivity">
 
     <ImageView
+        android:src="@drawable/baseline_add_to_photos_black_24"
         android:id="@+id/signupActivity_imageview_profile"
         android:layout_width="100dp"
         android:layout_height="100dp"

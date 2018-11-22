@@ -20,6 +20,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.UploadTask;
 import com.tistory.hadeslee.howtalk.model.UserModel;
 
 public class SignupActivity extends AppCompatActivity {
@@ -69,11 +71,21 @@ public class SignupActivity extends AppCompatActivity {
                         .addOnCompleteListener(SignupActivity.this, new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
-                                UserModel userModel = new UserModel();
-                                userModel.username = name.getText().toString();
+                                final String uid = task.getResult().getUser().getUid();
+                                FirebaseStorage.getInstance().getReference().child("userImages").child(uid).putFile(imageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                                        @SuppressWarnings("VisivleForTests")
+                                        String imageUrl = task.getResult().getDownloadUrl().toString();
 
-                                String uid = task.getResult().getUser().getUid();
-                                FirebaseDatabase.getInstance().getReference().child("users").child(uid).setValue(userModel);
+                                        UserModel userModel = new UserModel();
+                                        userModel.username = name.getText().toString();
+                                        userModel.prodileImageUrl = imageUrl;
+
+                                        FirebaseDatabase.getInstance().getReference().child("users").child(uid).setValue(userModel);
+                                    }
+                                });
+
                             }
                         });
             }
