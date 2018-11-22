@@ -55,6 +55,7 @@ public class SplashActivity extends AppCompatActivity {
         String splash_message = mFirebaseRemoteConfig.getString("splash_message");
 
         linearLayout.setBackgroundColor(Color.parseColor(splash_background));
+
         if (caps) {
             AlertDialog.Builder builder = new AlertDialog.Builder(SplashActivity.this);
             builder.setMessage(splash_message).setPositiveButton("확인", new DialogInterface.OnClickListener() {
