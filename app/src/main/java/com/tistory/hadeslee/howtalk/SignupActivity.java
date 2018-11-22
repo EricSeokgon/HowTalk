@@ -51,11 +51,11 @@ public class SignupActivity extends AppCompatActivity {
                         .addOnCompleteListener(SignupActivity.this, new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
-                              //  UserModel userModel = new UserModel();
-                                //userModel.username = name.getText().toString();
+                                UserModel userModel = new UserModel();
+                                userModel.username = name.getText().toString();
 
-                                //String uid = task.getResult().getUser().getUid();
-                                //FirebaseDatabase.getInstance().getReference().child("users").child(uid).setValue(userModel);
+                                String uid = task.getResult().getUser().getUid();
+                                FirebaseDatabase.getInstance().getReference().child("users").child(uid).setValue(userModel);
                             }
                         });
             }
